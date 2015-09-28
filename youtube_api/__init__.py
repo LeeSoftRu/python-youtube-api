@@ -233,7 +233,7 @@ class YoutubeAPI:
 
     def decode_single(self, api_data):
 
-        res_obj = json.loads(api_data)
+        res_obj = json.loads(str(api_data, 'utf8'))
         if 'error' in res_obj:
             msg = "Error " + res_obj['error']['code'] + " " + res_obj['error']['message']
             if res_obj['error']['errors'][0]:
@@ -248,7 +248,7 @@ class YoutubeAPI:
 
     def decode_list(self, api_data):
 
-        res_obj = json.loads(api_data)
+        res_obj = json.loads(str(api_data, 'utf8'))
         if 'error' in res_obj:
             msg = "Error " + res_obj['error']['code'] + " " + res_obj['error']['message']
             if res_obj['error']['errors'][0]:
