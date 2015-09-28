@@ -133,7 +133,8 @@ class YoutubeAPI:
             'part': 'id,snippet,contentDetails,statistics,invideoPromotion'
         }
         if optional_params:
-            params += optional_params
+            for key, value in optional_params.items():
+                params[key] = value
 
         api_data = self.api_get(api_url, params)
         return self.decode_single(api_data)
