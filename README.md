@@ -9,36 +9,44 @@ The reason of returning the decoded JSON response directly is that you only need
 to use this library, instead of learning my set of API again (Keep it simple).
 
 ```python
-youtube = YoutubeAPI('key': '/* Your API key here */')
+from youtube_api import *
 
-// Return a dict 
-video = youtube.get_video_info('rie-hPVJ7Sw')
+def dump(jsonData):
+    print(json.dumps(jsonData, sort_keys=True, indent=4, separators=(',', ': ')))
 
-// Search playlists, channels and videos
-results = youtube.search('Android')
+youtube = YoutubeAPI({'key': '/* Your API key here */'})
 
-// Search only Videos
-video_list = youtube.search_videos('Android')
+# Return a dict
+dump(youtube.get_video_info('rie-hPVJ7Sw'))
 
-// Search only Videos in a given channel
-video_list = youtube.search_channel_videos('keyword', 'UCk1SpWNzOs4MYmr0uICEntg', 50)
+# Search playlists, channels and videos
+dump(youtube.search('Android'))
 
-results = youtube.search_advanced({/* params */ })
+# Search only Videos
+dump(youtube.search_videos('Android'))
 
-channel = youtube.get_channel_by_name('xdadevelopers')
+# Search only Videos in a given channel
+# TODO Returns false
+dump(youtube.search_channel_videos('keyword', 'UCk1SpWNzOs4MYmr0uICEntg', 50))
 
-channel = youtube.get_channel_by_id('UCk1SpWNzOs4MYmr0uICEntg')
+# TODO Not complete example
+dump(youtube.search_advanced({}))
 
-playlist = youtube.get_playlist_by_id('PL590L5WQmH8fJ54F369BLDSqIwcs-TCfs')
+dump(youtube.get_channel_by_name('xdadevelopers'))
 
-playlists = youtube->get_playlists_by_channel_id('UCk1SpWNzOs4MYmr0uICEntg')
+dump(youtube.get_channel_by_id('UCk1SpWNzOs4MYmr0uICEntg'))
 
-playlist_items = youtube.get_playlist_items_by_playlist_id('PL590L5WQmH8fJ54F369BLDSqIwcs-TCfs')
+dump(youtube.get_playlist_by_id('PL590L5WQmH8fJ54F369BLDSqIwcs-TCfs'))
 
-activities = youtube.get_activities_by_channel_id('UCk1SpWNzOs4MYmr0uICEntg')
+dump(youtube.get_playlists_by_channel_id('UCk1SpWNzOs4MYmr0uICEntg'))
 
-video_id = youtube.parse_vid_from_url('https://www.youtube.com/watch?v=moSFlvxnbgk')
-// result: moSFlvxnbgk
+dump(youtube.get_playlist_items_by_playlist_id('PL590L5WQmH8fJ54F369BLDSqIwcs-TCfs'))
+
+dump(youtube.get_activities_by_channel_id('UCk1SpWNzOs4MYmr0uICEntg'))
+
+# TODO Fails:
+dump(youtube.parse_vid_from_url('https://www.youtube.com/watch?v=moSFlvxnbgk'))
+# result: moSFlvxnbgk
 ```
 
 ## Basic Search Pagination
@@ -54,7 +62,7 @@ params = {
     'maxResults': 50
 }
 
-// Make Intial Call. With second argument to reveal page info such as page tokens.
+// Make Initial Call. With second argument to reveal page info such as page tokens.
 search = youtube.search_advanced(params, True)
 
 // check if we have a pageToken
@@ -107,7 +115,7 @@ print search['results']
 
 ```
 
-The pagination above is quite basic. Depending on what you are trying to achieve; you may want to create a recurssive function that traverses the results.
+The pagination above is quite basic. Depending on what you are trying to achieve; you may want to create a recursive function that traverses the results.
 
 ## Youtube Data API v3
 - [Youtube Data API v3 Doc](https://developers.google.com/youtube/v3/)
